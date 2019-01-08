@@ -46,12 +46,12 @@
 	 
  	</a-assets>
 		
-    <a-video id="vid" preload="true" src="#video" width="1.8" height="1" position="0 0 0"  event-set__enter="_event: mouseenter; width: 1.8; height: 1;"
+    <a-video id="vid" preload="true" src="#video" width="1.8" height="1" position="0 0 0" rotation="270 0 0" event-set__enter="_event: mouseenter; width: 1.8; height: 1;"
             event-set__leave="_event: mouseleave;  width: 1.8; height: 1;">
 	    <a-image id="play" src="#play-image" width="0.4" height="0.4" position="0 0 0.1" rotation="270 0 0" transparent="true" material="alphaTest: 0.5" data-clickable visible="true" onclick="dosomething()"></a-image>
 
 	</a-video>
-		  <a-marker-camera id="camera" rotation-reader preset='custom' type='pattern' url='https://raw.githubusercontent.com/ToniNP95/AR_resources/master/pattern-marker.patt'></a-marker-camera>
+		  <a-marker-camera id="camera" preset='custom' type='pattern' url='https://raw.githubusercontent.com/ToniNP95/AR_resources/master/pattern-marker.patt'></a-marker-camera>
 	</a-scene>
 	
 <script>
