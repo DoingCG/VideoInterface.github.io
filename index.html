@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	
+<script src="js/aframe.min.js"></script>
+<!-- include aframe-ar.js -->
+<script src="js/aframe-ar.js"></script>
+<script src="https://rawgit.com/blairmacintyre/aframe-look-at-billboard-component/master/dist/aframe-look-at-billboard-component.min.js"></script>
+
+	<script src="//vjs.zencdn.net/5.19/video.js"></script>
+	
+<script src="build/three.js"></script>
+<script src='build/three.min.js'></script>
+
+<!--<style type="text/css">
+	
+#arjsDebugUIContainer 
+{
+   display: none; !important;
+}
+	
+.a-enter-vr-button
+{
+   display: none; !important;		
+}
+	
+#playButton {
+  position: fixed;
+  top: calc(50% - 1em);
+  left: calc(50% - 2em);
+  width: 8em;
+  height: 4em;
+  z-index: 10;
+  color: red;
+  /*background-color: blue;*/
+}
+#scene{
+	z-index:1;
+}
+#myVid{
+	z-index:5;
+	}
+	#video-js{
+	z-index:8;
+	}
+</style>
+<script>
+	var player = videojs("videoExt");
+
+player.ready(function() {
+   player.src({
+		src: "//vjs.zencdn.net/v/oceans.mp4"
+   });
+});
+	
+	
+	
+	///
+var videito = document.getElementById("myVid");
+var PlayBut=document.getElementById("playButton");
+//console.log(vid);
+	
+function buttonClick()
+	{
+		//PlayBut.style.color=red;
+		//PlayBut.style.backgroundColor=green;
+	  	alert("patata");
+		//alert(PlayBut.id);
+	}
+function playVideo()
+	{
+	//alert("eventListener");
+  	//this.style.display = 'none';
+  	//PlayBut.style.visibility='hidden';
+	//alert("patata");
+  	videito.play();	
+	alert("eventListener");
+	}
+//PlayButt.addEventListener("click", playVideo, false);
+	
+</script>-->
+
+</head>
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+	
+	
+	<script>
+		
+	var scene=document.getElementById("scene");
+	var video=document.getElementById("vid");
+	var play=document.getElementById("play");
+	var mark=document.getElementById("marker");
+	var camera=document.getElementById("camera");
+		
+		AFRAME.registerComponent('rotation-reader', {
+    tick: function () {
+        //var rotation = this.el.getAttribute('rotation');
+	    //video.setAttribute('rotation',rotation);
+	    camera.object3D.updateMatrixWorld();
+	    var rotation=camera.object3D.getWorldQuaternion();
+	    video.object3D.setRotationFromQuaternion(rotation);
+	    video.object3D.updateMatrixWorld();
+	    console.log( video.object3D.quaternion, video.object3D.getWorldQuaternion() );
+	    //alert(rotation.y)
+    }
+  });
+	</script>
+	
+<a-scene id="scene" embedded arjs='sourceType: webcam;' >
+	
+<a-assets> 
+    <video id="video"  src="https://instagram.fmad7-1.fna.fbcdn.net/vp/8df35c8a81408c354f3f385d99bb55ea/5C2B0807/t50.2886-16/49682316_2053630514726334_789195232708132864_n.mp4?_nc_ht=instagram.fmad7-1.fna.fbcdn.net " 
+    <!-- webkit-playsinline  
+    crossOrigin="anonymous"-->
+    type="video/mp4"
+    poster="https://instagram.fmad7-1.fna.fbcdn.net/vp/dbcd3714bea09773226546e0fbc56f17/5C2ADC82/t51.2885-15/e35/46552306_378004282983459_4023662717802556687_n.jpg?_nc_ht=instagram.fmad7-1.fna.fbcdn.net"
+    <!-- autoplay="true"
+    loop="true"-->
+    controls ></video>
+	  <img id="play-image" src="btn-play_video.png" transparent="true">
+	 
+ 	</a-assets>
+	<!--<a-marker id='marker' preset='custom' type='pattern' url='https://raw.githubusercontent.com/ToniNP95/AR_resources/master/pattern-marker.patt'>
+		<a-box color="green" scale=" 0.3 0.3 0.3" position="0 0 0" rotation="270 0 0"><a-text id="debugText" position="0 0 -0.4" value="Hello, World!"></a-text></a-box>
+	</a-marker>-->
+	
+	
+    <a-video id="vid" preload="true" src="#video" width="1.8" height="1" position="0 0 0"  event-set__enter="_event: mouseenter; width: 1.8; height: 1;"
+            event-set__leave="_event: mouseleave;  width: 1.8; height: 1;">
+	    <a-image id="play" src="#play-image" width="0.4" height="0.4" position="0 0 0.1" rotation="270 0 0" transparent="true" material="alphaTest: 0.5" data-clickable visible="true" onclick="dosomething()"></a-image>
+
+	</a-video>
+ 
+
+		  <a-marker-camera id="camera" rotation-reader preset='custom' type='pattern' url='https://raw.githubusercontent.com/ToniNP95/AR_resources/master/pattern-marker.patt'></a-marker-camera>
+
+	</a-scene>
+	
+<script>
+
+	var scene=document.getElementById("scene");
+	var video=document.getElementById("vid");
+	var play=document.getElementById("play");
+	var mark=document.getElementById("marker");
+	var camera=document.getElementById("camera");
+	var i=0;
+	
+
+function bucle() {
+  requestAnimationFrame( bucle );
+  //alert("bucle");
+}
+bucle();
+ //var scene = document.querySelector('a-scene');
+
+
+camera.addEventListener('componentchanged', function (evt) {
+  if (evt.name === 'rotation') {
+    console.log('Entity has rotated from', evt.oldData, 'to', evt.newData, '!');
+    //alert('Entity has rotated from', evt.oldData, 'to', evt.newData, '!');
+  }
+});	
+scene.onload=run();
+		
+function run () {
+  requestAnimationFrame( run );
+  //var entity = document.getElementById('debugBox');
+        /*var position=mark.getAttribute('position');
+	//alert("actualizando pos");
+	video.setAttribute('position',position);*/
+	//scene.object3D.updateMatrixWorld();
+	//var position	= THREEx.ObjCoord.worldPosition(mark.object3D);
+	//video.setAttribute('position',position);
+	
+	
+	 if(document.getElementById("video").paused)
+ {	 
+	play.setAttribute("visible","true");
+ }
+
+}
+
+	
+   function dosomething(){
+	play.setAttribute("visible","false");
+	//document.getElementById("vid").play();
+	document.getElementById("video").play();
+	   
+	//alert("patata"); 
+   }
+  /*document.getElementById("vid").addEventListener("mouseenter",function(){
+	  dosomething();
+  },false);*/
+	
+</script>
+	
+</body>
+</html>
